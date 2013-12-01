@@ -184,8 +184,12 @@ public class GameView extends JPanel {
 		cnBrd.setTitle(gModel.getCNCount());
 	}
 
-	public void setNameBrd() {
-		nameBrd.setTitle("Name");
+	public void setNameBrd(String txt) {
+		nameBrd.setTitle(txt);
+	}
+	
+	public void setPointsBrd(String txt) {
+		nameBrd.setTitle(txt);
 	}
 
 	public void setPointsBrd() {
