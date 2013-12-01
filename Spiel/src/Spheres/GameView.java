@@ -157,40 +157,43 @@ public class GameView extends JPanel {
 		return footer;
 	}
 
-	public void setUsername(String name) {
+	public void setUsername() {
 		nameLa.setText(gModel.getUsername());
 	}
 
-	public void setPoints(Integer points) {
-		pointsLa.setText(points.toString());
+	public void setPoints() {
+		pointsLa.setText(gModel.getPointsString());
 	}
 
-	public void setTimeDraftsLeftLa(Integer draws) {
-		timeDrawsLeftLa.setText(draws.toString());
+	public void setTimeDraftsLeftLa() {
+		if (gModel.getGameMode()==0)
+			timeDrawsLeftLa.setText(gModel.getTimeLeft());
+		else
+			timeDrawsLeftLa.setText(gModel.getDrawsLeft());
 	}
 
-	public void setCBB(String txt) {
-		cbBrd.setTitle(txt);
+	public void setCBB() {
+		cbBrd.setTitle(gModel.getCBCount());
 	}
 
-	public void setSSB(String txt) {
-		ssBrd.setTitle(txt);
+	public void setSSB() {
+		ssBrd.setTitle(gModel.getSSCount());
 	}
 
-	public void setCNB(String txt) {
-		cnBrd.setTitle(txt);
+	public void setCNB() {
+		cnBrd.setTitle(gModel.getCNCount());
 	}
 
-	public void setNameBrd(String txt) {
-		nameBrd.setTitle(txt);
+	public void setNameBrd() {
+		nameBrd.setTitle("Name");
 	}
 
-	public void setPointsBrd(String txt) {
-		pointsBrd.setTitle(txt);
+	public void setPointsBrd() {
+		pointsBrd.setTitle(gModel.getPointsString());
 	}
 
-	public void setTimeDrawsLeftBrd(String txt) {
-		timeDrawsLeftBrd.setTitle(txt);
+	public void setTimeDrawsLeftBrd() {
+		timeDrawsLeftBrd.setTitle("Rest");
 	}
 	
 	public void addExitListener(ActionListener exit) {

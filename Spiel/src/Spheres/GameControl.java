@@ -7,22 +7,29 @@ import java.awt.event.ActionListener;
 public class GameControl {
 
 	// Datenfelder
-	private GameView gameview;
-	private GameModel gamemodel;
+	private GameView gView;
+	private GameModel gModel;
 
 	// Konstruktor
-	public GameControl(GameView g_view, GameModel g_model) {
-		gameview = g_view;
-		gamemodel = g_model;
+	public GameControl(GameView gViewArgs, GameModel gModelArgs) {
+		gView = gViewArgs;
+		gModel = gModelArgs;
 
 		// --------------------------------Action-Listerner_für_die_GameView
-		gameview.addExitListener(new ExitListener());
-		gameview.addShopListener(new ShopListener());
-		gameview.addMenuListener(new MenuListener());
+		gView.addExitListener(new ExitListener());
+		gView.addShopListener(new ShopListener());
+		gView.addMenuListener(new MenuListener());
+		
+		deliverValuesGView();
 	}
 	
 	//===========_Methoden_zum_steuern_========
-	public 
+	public void deliverValuesGView(){
+		//gView.setTimeDraftsLeftLa();
+		gView.setCBB();
+		gView.setCNB();
+		gView.setSSB();
+	}
 	
 	// Innere Klassen für die ActionListener
 	class ExitListener implements ActionListener {
