@@ -45,35 +45,30 @@ public class GameControl {
 	}
 
 	class ShopListener implements ActionListener {
-
 		public void actionPerformed(ActionEvent shop) {
 
 		}
 	}
 
 	class MenuListener implements ActionListener {
-
 		public void actionPerformed(ActionEvent menu) {
 
 		}
 	}
 	
 	class BronsonListener implements ActionListener {
-		
 		public void actionPerformed(ActionEvent bronson) {
 			
 		}
 	}
 	
-	class NorrisListener implements ActionListener {
-		
+	class NorrisListener implements ActionListener {	
 		public void actionPerformed(ActionEvent norris) {
 			
 		}
 	}
 	
-	class SeagalListener implements ActionListener {
-		
+	class SeagalListener implements ActionListener {	
 		public void actionPerformed(ActionEvent seagal) {
 			
 		}

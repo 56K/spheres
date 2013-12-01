@@ -22,7 +22,7 @@ public class GameView extends JPanel {
 	private JButton cbB, ssB, cnB, menuB, shopB, beendenB;
 	private TitledBorder cbBrd, ssBrd, cnBrd, pointsBrd, nameBrd,
 			timeDrawsLeftBrd;
-
+	//Konstruktor
 	public GameView(GameModel gModelArgs) {
 		super();
 		gModel=gModelArgs;
