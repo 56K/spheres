@@ -20,6 +20,7 @@ public class Ball extends Random implements Comparable {
 		yCoord = posToYCoord(pos);
 		oldPos = newPos = pos;
 		setBallColor(colorChooser(colorSet));
+		
 	}
 
 	// =======_Koordinatenumrechnung_============
