@@ -23,7 +23,7 @@ public class GameControl {
 		deliverValuesGView();
 	}
 	
-	//===========_Methoden_zum_steuern_========
+	//===========_Methoden_zum_steuern_=========
 	public void deliverValuesGView(){
 		//gView.setTimeDraftsLeftLa();
 		gView.setCBB();

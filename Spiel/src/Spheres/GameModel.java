@@ -11,6 +11,7 @@ public class GameModel implements Serializable {
 	private Time timeLeft;
 	private int drawsLeft;
 
+	//Konstruktor
 	public GameModel(int modeArgs, User userArgs) {
 		this.user = userArgs;
 		gameMode = modeArgs;

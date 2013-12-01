@@ -223,5 +223,4 @@ public class GameView extends JPanel {
 	public void addSeagalListener(ActionListener seagal) {
 		ssB.addActionListener(seagal);
 	}
-
 }
