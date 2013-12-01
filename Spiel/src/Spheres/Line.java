@@ -31,7 +31,7 @@ public class Line {
 		
 		x_end = x_e;
 		y_end = y_e;
-	}
+	} 
 	
 	public void setColor(Color c) {
 		
