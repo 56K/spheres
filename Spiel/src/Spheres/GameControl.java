@@ -53,4 +53,25 @@ public class GameControl {
 
 		}
 	}
+	
+	class BronsonListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent bronson) {
+			
+		}
+	}
+	
+	class NorrisListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent norris) {
+			
+		}
+	}
+	
+	class SeagalListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent seagal) {
+			
+		}
+	}
 }

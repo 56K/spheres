@@ -207,5 +207,17 @@ public class GameView extends JPanel {
 	public void addMenuListener(ActionListener menu) {
 		menuB.addActionListener(menu);
 	}
+	
+	public void addBronsonListener(ActionListener bronson) {
+		cbB.addActionListener(bronson);
+	}
+	
+	public void addNorrisListener(ActionListener norris) {
+		cnB.addActionListener(norris);
+	}
+	
+	public void addSeagalListener(ActionListener seagal) {
+		ssB.addActionListener(seagal);
+	}
 
 }
