@@ -11,6 +11,7 @@ public class GameModel implements Serializable {
 	public GameModel(int modeArgs, User userArgs) {
 		user = userArgs;
 		gameMode = modeArgs;
-
 	}
+	
+	
 }

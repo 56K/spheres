@@ -15,11 +15,15 @@ public class GameControl {
 		gameview = g_view;
 		gamemodel = g_model;
 
+		// --------------------------------Action-Listerner_für_die_GameView
 		gameview.addExitListener(new ExitListener());
 		gameview.addShopListener(new ShopListener());
 		gameview.addMenuListener(new MenuListener());
 	}
-
+	
+	//===========_Methoden_zum_steuern_========
+	public 
+	
 	// Innere Klassen für die ActionListener
 	class ExitListener implements ActionListener {
 
