@@ -31,6 +31,7 @@ public class WindowClosingAdapter extends WindowAdapter {
 
 	@Override
 	public void windowDeactivated(WindowEvent arg0) {
+		
 	}
 
 	@Override
