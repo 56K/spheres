@@ -30,7 +30,7 @@ public class GameControl {
 		gView.setCNB();
 		gView.setSSB();
 		gView.setNameBrd("Spieler");
-		gView.setUsername();
+		//gView.setUsername();
 		gView.setPointsBrd("Punkte");
 		gView.setPoints();
 	}
