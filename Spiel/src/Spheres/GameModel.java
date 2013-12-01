@@ -12,7 +12,7 @@ public class GameModel implements Serializable {
 	private int drawsLeft;
 
 	public GameModel(int modeArgs, User userArgs) {
-		user = userArgs;
+		this.user = userArgs;
 		gameMode = modeArgs;
 	}
 	

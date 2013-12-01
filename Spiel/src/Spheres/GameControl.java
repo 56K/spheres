@@ -29,6 +29,10 @@ public class GameControl {
 		gView.setCBB();
 		gView.setCNB();
 		gView.setSSB();
+		gView.setNameBrd("Spieler");
+		gView.setUsername();
+		gView.setPointsBrd("Punkte");
+		gView.setPoints();
 	}
 	
 	// Innere Klassen für die ActionListener
