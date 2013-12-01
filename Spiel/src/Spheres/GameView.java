@@ -158,7 +158,7 @@ public class GameView extends JPanel {
 	}
 
 	public void setUsername(String name) {
-		nameLa.setText(name);
+		nameLa.setText(gModel.getUsername());
 	}
 
 	public void setPoints(Integer points) {

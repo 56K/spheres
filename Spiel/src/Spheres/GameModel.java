@@ -13,5 +13,7 @@ public class GameModel implements Serializable {
 		gameMode = modeArgs;
 	}
 	
-	
+	public String getUsername(){
+		return user.getName();
+	}
 }
