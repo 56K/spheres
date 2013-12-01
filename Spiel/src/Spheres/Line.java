@@ -33,9 +33,9 @@ public class Line {
 		y_end = y_e;
 	} 
 	
-	public void setColor(Color c) {
+	public void setColor(Color cArgs) {
 		
-		color = c;
+		color = cArgs;
 	}
 	//--------------------------------------------------------
 }
