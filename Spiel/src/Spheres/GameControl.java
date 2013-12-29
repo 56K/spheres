@@ -32,7 +32,8 @@ public class GameControl {
 		gView.setNameBrd("Spieler");
 		gView.setUsername();
 		gView.setPointsBrd("Punkte");
-		gView.setPoints();
+		gView.setPoints("0");
+		gView.setTimeDraftsLeftLa();
 	}
 	
 	// Innere Klassen für die ActionListener

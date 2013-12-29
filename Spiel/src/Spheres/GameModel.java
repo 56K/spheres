@@ -13,8 +13,10 @@ public class GameModel implements Serializable {
 
 	//Konstruktor
 	public GameModel(int modeArgs, User userArgs) {
-		this.user = userArgs;
+		user = userArgs;
 		gameMode = modeArgs;
+		timeLeft = new Time (60000);
+		drawsLeft =30;
 	}
 	
 	public String getUsername(){

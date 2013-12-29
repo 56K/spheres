@@ -84,22 +84,29 @@ public class GameView extends JPanel {
 
 		// -------------------------------------west-Panel
 		westPa = new JPanel();
-		westPa.setSize(new Dimension(100, 400));
+		westPa.setMaximumSize(new Dimension(100, 400));
 		westPa.setLayout(new GridLayout(7, 1, 10, 10));
 		westPa.setBackground(Color.gray.darker());
 
 		westPa.add(new JLabel());
 		// ------------------------Name-Label
-
+		nameLa = new JLabel();
+		nameLa.setBorder(nameBrd);
+		nameLa.setSize(new Dimension(80,20));
+		westPa.add(nameLa);
 		westPa.add(new JLabel());
 		// ------------------------Punktestand-Label
 		pointsLa = new JLabel();
 		pointsLa.setBorder(pointsBrd);
+		westPa.add(pointsLa);
 		westPa.add(new JLabel());
 		// ------------------------Zeit / Züge-Label
+		timeDrawsLeftLa = new JLabel();
+		timeDrawsLeftLa.setBorder(timeDrawsLeftBrd);
+		westPa.add(timeDrawsLeftLa);
+		
 		westPa.add(new JLabel());
 		add(westPa, BorderLayout.WEST);
-
 	}
 
 	// ==================_footer_anlegen_=========
@@ -161,8 +168,8 @@ public class GameView extends JPanel {
 		nameLa.setText(gModel.getUsername());
 	}
 
-	public void setPoints() {
-		pointsLa.setText(gModel.getPointsString());
+	public void setPoints(String points) {
+		pointsLa.setText(points);
 	}
 
 	public void setTimeDraftsLeftLa() {
@@ -192,9 +199,11 @@ public class GameView extends JPanel {
 		nameBrd.setTitle(txt);
 	}
 
+	/*
 	public void setPointsBrd() {
 		pointsBrd.setTitle(gModel.getPointsString());
 	}
+	*/
 
 	public void setTimeDrawsLeftBrd() {
 		timeDrawsLeftBrd.setTitle("Rest");
