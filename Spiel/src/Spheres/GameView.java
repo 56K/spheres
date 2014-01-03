@@ -3,7 +3,7 @@ package Spheres;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,7 +17,8 @@ import javax.swing.border.TitledBorder;
 public class GameView extends JPanel {
 
 	private GameModel gModel;
-	private JPanel centerPa, southPa, gamePa, eastPa, westPa;
+	private GamePanel gPanel;
+	private JPanel southPa, eastPa, westPa;
 	private JLabel pointsLa, nameLa, timeDrawsLeftLa, northLa;
 	private JButton cbB, ssB, cnB, menuB, shopB, beendenB;
 	private TitledBorder cbBrd, ssBrd, cnBrd, pointsBrd, nameBrd,
@@ -27,30 +28,28 @@ public class GameView extends JPanel {
 	public GameView(GameModel gModelArgs) {
 		super();
 		gModel = gModelArgs;
+		gPanel = new GamePanel(gModel);
+		gPanel.setBackground(Color.GRAY.brighter());
 		cbBrd = BorderFactory.createTitledBorder("");
 		cbBrd.setTitleJustification(TitledBorder.LEFT);
 		ssBrd = BorderFactory.createTitledBorder("");
 		ssBrd.setTitleJustification(TitledBorder.CENTER);
 		cnBrd = BorderFactory.createTitledBorder("");
 		cnBrd.setTitleJustification(TitledBorder.RIGHT);
-		pointsBrd = BorderFactory.createTitledBorder("");
-		nameBrd = BorderFactory.createTitledBorder("");
-		timeDrawsLeftBrd = BorderFactory.createTitledBorder("");
+		pointsBrd = BorderFactory.createTitledBorder("Punkte");
+		nameBrd = BorderFactory.createTitledBorder("Name");
+		timeDrawsLeftBrd = BorderFactory.createTitledBorder("Übrig");
 
 		setLayout(new BorderLayout(5, 5));
 		setBackground(Color.green.darker());
 		southPa = createFooter();
+		southPa.setPreferredSize(new Dimension(450, 30));
 		add(southPa, BorderLayout.SOUTH);
-		// ---------------------------------center-Panel_Spielfeld
-		centerPa = new JPanel();
-		centerPa.setMaximumSize(new Dimension(400, 400));
-		centerPa.setBorder(BorderFactory.createEtchedBorder(Color.LIGHT_GRAY,
-				Color.black));
-		centerPa.setVisible(false);
-		add(centerPa, BorderLayout.CENTER);
+		// --Das GamePanel einbinden
+		add(gPanel, BorderLayout.CENTER);
 		// ----------------------------------east-Panel_für_die_Joker
 		eastPa = new JPanel();
-		eastPa.setSize(new Dimension(100, 400));
+		eastPa.setPreferredSize(new Dimension(75, 375));
 		eastPa.setLayout(new GridLayout(7, 1, 10, 10));
 		eastPa.setBackground(Color.gray.darker());
 		eastPa.add(new JLabel("- Joker -"));
@@ -64,7 +63,7 @@ public class GameView extends JPanel {
 		eastPa.add(new JLabel());
 		// .................Seagal-button
 		ssB = new JButton("Seagal");
-		ssB.setSize(new Dimension(100, 50));
+		ssB.setPreferredSize(new Dimension(100, 50));
 		ssB.setBorder(ssBrd);
 		ssB.setBackground(Color.cyan);
 		eastPa.add(ssB);
@@ -79,15 +78,16 @@ public class GameView extends JPanel {
 		add(eastPa, BorderLayout.EAST);
 
 		// -------------------------------------north-Panel
-		northLa = new JLabel("S P H E R E S");
+		northLa = new JLabel("<html><h1>S P H E R E S</h1></html>");
 		northLa.setHorizontalAlignment(JLabel.CENTER);
+		northLa.setPreferredSize(new Dimension(450, 75));
 		add(northLa, BorderLayout.NORTH);
 
 		// -------------------------------------west-Panel
 		westPa = new JPanel();
-		westPa.setSize(new Dimension(100, 400));
 		westPa.setLayout(new GridLayout(7, 1, 10, 10));
 		westPa.setBackground(Color.gray.darker());
+		westPa.setPreferredSize(new Dimension(75, 375));
 
 		westPa.add(new JLabel("-  Infos  -"));
 		// ------------------------Name-Label
@@ -108,13 +108,15 @@ public class GameView extends JPanel {
 
 		westPa.add(new JLabel());
 		add(westPa, BorderLayout.WEST);
-		
+
 		repaint();
 	}
+
 	// ==================_footer_anlegen_=========
 	public JPanel createFooter() {
 		JPanel footer = new JPanel();
 		footer.setLayout(new GridLayout(1, 4, 10, 10));
+		footer.setPreferredSize(new Dimension(450, 40));
 		add(footer, BorderLayout.SOUTH);
 		beendenB = new JButton("EXIT");
 		beendenB.setBorder(BorderFactory.createEtchedBorder(Color.LIGHT_GRAY,
@@ -122,6 +124,7 @@ public class GameView extends JPanel {
 		beendenB.setSize(new Dimension(10, 20));
 		beendenB.setAlignmentX(LEFT_ALIGNMENT);
 		beendenB.setMnemonic(KeyEvent.VK_E);
+		beendenB.setPreferredSize(new Dimension(100, 30));
 		footer.add(beendenB);
 
 		/*
@@ -137,6 +140,7 @@ public class GameView extends JPanel {
 		shopB.setSize(new Dimension(10, 20));
 		shopB.setAlignmentX(CENTER_ALIGNMENT);
 		shopB.setMnemonic(KeyEvent.VK_S);
+		shopB.setPreferredSize(new Dimension(100, 30));
 		footer.add(shopB);
 		/*
 		 * abmeldenB.addActionListener(new ActionListener() {
@@ -152,6 +156,7 @@ public class GameView extends JPanel {
 		menuB.setSize(new Dimension(10, 20));
 		menuB.setAlignmentX(LEFT_ALIGNMENT);
 		menuB.setMnemonic(KeyEvent.VK_M);
+		menuB.setPreferredSize(new Dimension(100, 30));
 		footer.add(menuB);
 		/*
 		 * backB.addActionListener(new ActionListener() {
@@ -202,16 +207,6 @@ public class GameView extends JPanel {
 	 * public void setPointsBrd() {
 	 * pointsBrd.setTitle(gModel.getPointsString()); }
 	 */
-
-	// ----- hier wir gezeichnet ------
-	public void paintComponent(Graphics g) {
-		Ball ball;
-		for (int i = 0; i < 36; i++) {
-			ball = gModel.getBall(i);
-			ball.draw(g);
-		}
-	}
-
 
 	public void setTimeDrawsLeftBrd() {
 		timeDrawsLeftBrd.setTitle("Rest");
