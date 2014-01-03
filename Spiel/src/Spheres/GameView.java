@@ -3,8 +3,8 @@ package Spheres;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
@@ -15,18 +15,18 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 public class GameView extends JPanel {
-	
+
 	private GameModel gModel;
 	private JPanel centerPa, southPa, gamePa, eastPa, westPa;
 	private JLabel pointsLa, nameLa, timeDrawsLeftLa, northLa;
 	private JButton cbB, ssB, cnB, menuB, shopB, beendenB;
 	private TitledBorder cbBrd, ssBrd, cnBrd, pointsBrd, nameBrd,
 			timeDrawsLeftBrd;
-	//Konstruktor
+
+	// Konstruktor
 	public GameView(GameModel gModelArgs) {
 		super();
-		gModel=gModelArgs;
-
+		gModel = gModelArgs;
 		cbBrd = BorderFactory.createTitledBorder("");
 		cbBrd.setTitleJustification(TitledBorder.LEFT);
 		ssBrd = BorderFactory.createTitledBorder("");
@@ -46,13 +46,14 @@ public class GameView extends JPanel {
 		centerPa.setMaximumSize(new Dimension(400, 400));
 		centerPa.setBorder(BorderFactory.createEtchedBorder(Color.LIGHT_GRAY,
 				Color.black));
+		centerPa.setVisible(false);
 		add(centerPa, BorderLayout.CENTER);
 		// ----------------------------------east-Panel_für_die_Joker
 		eastPa = new JPanel();
 		eastPa.setSize(new Dimension(100, 400));
 		eastPa.setLayout(new GridLayout(7, 1, 10, 10));
 		eastPa.setBackground(Color.gray.darker());
-		eastPa.add(new JLabel());
+		eastPa.add(new JLabel("- Joker -"));
 		// ................Bronson-Button
 		cbB = new JButton("Bronson");
 		cbB.setSize(new Dimension(100, 50));
@@ -84,15 +85,15 @@ public class GameView extends JPanel {
 
 		// -------------------------------------west-Panel
 		westPa = new JPanel();
-		westPa.setMaximumSize(new Dimension(100, 400));
+		westPa.setSize(new Dimension(100, 400));
 		westPa.setLayout(new GridLayout(7, 1, 10, 10));
 		westPa.setBackground(Color.gray.darker());
 
-		westPa.add(new JLabel());
+		westPa.add(new JLabel("-  Infos  -"));
 		// ------------------------Name-Label
 		nameLa = new JLabel();
 		nameLa.setBorder(nameBrd);
-		nameLa.setSize(new Dimension(80,20));
+		nameLa.setSize(new Dimension(80, 20));
 		westPa.add(nameLa);
 		westPa.add(new JLabel());
 		// ------------------------Punktestand-Label
@@ -104,11 +105,12 @@ public class GameView extends JPanel {
 		timeDrawsLeftLa = new JLabel();
 		timeDrawsLeftLa.setBorder(timeDrawsLeftBrd);
 		westPa.add(timeDrawsLeftLa);
-		
+
 		westPa.add(new JLabel());
 		add(westPa, BorderLayout.WEST);
+		
+		repaint();
 	}
-
 	// ==================_footer_anlegen_=========
 	public JPanel createFooter() {
 		JPanel footer = new JPanel();
@@ -122,15 +124,12 @@ public class GameView extends JPanel {
 		beendenB.setMnemonic(KeyEvent.VK_E);
 		footer.add(beendenB);
 
-/*		beendenB.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//saveUser(user);
-				System.exit(0);
-			}
-		});
-*/
+		/*
+		 * beendenB.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) {
+		 * //saveUser(user); System.exit(0); } });
+		 */
 
 		shopB = new JButton("Shop");
 		shopB.setBorder(BorderFactory.createEtchedBorder(Color.LIGHT_GRAY,
@@ -139,13 +138,13 @@ public class GameView extends JPanel {
 		shopB.setAlignmentX(CENTER_ALIGNMENT);
 		shopB.setMnemonic(KeyEvent.VK_S);
 		footer.add(shopB);
-/*
- * abmeldenB.addActionListener(new ActionListener() {
- * 
- * @Override public void actionPerformed(ActionEvent e) {
- * spheres.navigateTo(new ViewLogin(spheres),
- * SlidingPanel.Direction.RIGHT); saveUser(user); } });
- */
+		/*
+		 * abmeldenB.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) {
+		 * spheres.navigateTo(new ViewLogin(spheres),
+		 * SlidingPanel.Direction.RIGHT); saveUser(user); } });
+		 */
 
 		menuB = new JButton("Menu");
 		menuB.setBorder(BorderFactory.createEtchedBorder(Color.LIGHT_GRAY,
@@ -154,13 +153,13 @@ public class GameView extends JPanel {
 		menuB.setAlignmentX(LEFT_ALIGNMENT);
 		menuB.setMnemonic(KeyEvent.VK_M);
 		footer.add(menuB);
-/*
- * backB.addActionListener(new ActionListener() {
- * 
- * @Override public void actionPerformed(ActionEvent e) {
- * spheres.navigateTo(new Menu(spheres, user),
- * SlidingPanel.Direction.RIGHT); //saveUser(user); } });
- */
+		/*
+		 * backB.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) {
+		 * spheres.navigateTo(new Menu(spheres, user),
+		 * SlidingPanel.Direction.RIGHT); //saveUser(user); } });
+		 */
 		return footer;
 	}
 
@@ -173,7 +172,7 @@ public class GameView extends JPanel {
 	}
 
 	public void setTimeDraftsLeftLa() {
-		if (gModel.getGameMode()==0)
+		if (gModel.getGameMode() == 0)
 			timeDrawsLeftLa.setText(gModel.getTimeLeft());
 		else
 			timeDrawsLeftLa.setText(gModel.getDrawsLeft());
@@ -194,41 +193,50 @@ public class GameView extends JPanel {
 	public void setNameBrd(String txt) {
 		nameBrd.setTitle(txt);
 	}
-	
+
 	public void setPointsBrd(String txt) {
 		nameBrd.setTitle(txt);
 	}
 
 	/*
-	public void setPointsBrd() {
-		pointsBrd.setTitle(gModel.getPointsString());
+	 * public void setPointsBrd() {
+	 * pointsBrd.setTitle(gModel.getPointsString()); }
+	 */
+
+	// ----- hier wir gezeichnet ------
+	public void paintComponent(Graphics g) {
+		Ball ball;
+		for (int i = 0; i < 36; i++) {
+			ball = gModel.getBall(i);
+			ball.draw(g);
+		}
 	}
-	*/
+
 
 	public void setTimeDrawsLeftBrd() {
 		timeDrawsLeftBrd.setTitle("Rest");
 	}
-	
+
 	public void addExitListener(ActionListener exit) {
 		beendenB.addActionListener(exit);
 	}
-	
+
 	public void addShopListener(ActionListener shop) {
 		shopB.addActionListener(shop);
 	}
-	
+
 	public void addMenuListener(ActionListener menu) {
 		menuB.addActionListener(menu);
 	}
-	
+
 	public void addBronsonListener(ActionListener bronson) {
 		cbB.addActionListener(bronson);
 	}
-	
+
 	public void addNorrisListener(ActionListener norris) {
 		cnB.addActionListener(norris);
 	}
-	
+
 	public void addSeagalListener(ActionListener seagal) {
 		ssB.addActionListener(seagal);
 	}

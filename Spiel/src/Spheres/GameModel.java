@@ -17,6 +17,7 @@ public class GameModel implements Serializable {
 		gameMode = modeArgs;
 		timeLeft = new Time (60000);
 		drawsLeft =30;
+		balls = new Ball[36];
 	}
 	
 	public String getUsername(){
@@ -56,5 +57,15 @@ public class GameModel implements Serializable {
 	}
 	public int getGameMode(){
 		return gameMode;
+	}
+	
+	//=========Ball-OPerationen=========
+	public void addBall(Ball ballArgs){
+		int there= ballArgs.getPos();
+		balls[there]= ballArgs;
+	}
+	
+	public Ball getBall(int there){
+		return balls[there];
 	}
 }

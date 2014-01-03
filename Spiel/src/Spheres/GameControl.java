@@ -1,6 +1,7 @@
 package Spheres;
 
 //Bibliotheken
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -21,6 +22,7 @@ public class GameControl {
 		gView.addMenuListener(new MenuListener());
 		
 		deliverValuesGView();
+		fillGrid();
 	}
 	
 	//===========_Methoden_zum_steuern_=========
@@ -35,6 +37,16 @@ public class GameControl {
 		gView.setPoints("0");
 		gView.setTimeDraftsLeftLa();
 	}
+	
+	//------ befüllt das Grid nach dem Spielstart mit Bällen ----
+	public void fillGrid(){
+		for (int i = 0; i<36;i++){
+			gModel.addBall(new Ball(i,gModel.getGameMode()));
+			
+		}
+	}
+	
+	
 	
 	// Innere Klassen für die ActionListener
 	class ExitListener implements ActionListener {
