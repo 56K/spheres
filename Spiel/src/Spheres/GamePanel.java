@@ -39,9 +39,16 @@ public class GamePanel extends JComponent {
 			g2d.setColor(Color.BLACK);
 			g2d.draw(mousePath);
 			Point2D currentPoint = mousePath.getCurrentPoint();
-			g.drawLine((int)currentPoint.getX(), (int)currentPoint.getY(), getMousePosition().x, getMousePosition().y);
+			if(getMousePosition()!=null)
+				g.drawLine((int)currentPoint.getX(), (int)currentPoint.getY(), getMousePosition().x, getMousePosition().y);
 		}
 		
+		if(gModel.hasFinished())
+		{
+			g2d.setColor(Color.BLACK);
+			g2d.setFont(g2d.getFont().deriveFont(50f));
+			g2d.drawString("Ende", 100, 100);
+		}
 	}
 
 	public void setMousePath(Path2D mousePath) {

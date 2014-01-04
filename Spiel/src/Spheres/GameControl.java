@@ -239,8 +239,8 @@ public class GameControl {
 			gPanel.setMousePath(null);
 			if (formsRectangle) {
 				gModel.deleteColor(selectedBalls.peek().getBallColor());
+				gModel.subDraws();
 			} else {
-				Ball[][] balls = gModel.getBalls();
 				if (selectedBalls.size() > 1) {
 					for (Ball ball : selectedBalls) {
 						ball.setChoosen(false);
@@ -249,7 +249,6 @@ public class GameControl {
 					gModel.subDraws();
 				} else if (!selectedBalls.isEmpty())
 					selectedBalls.peek().setChoosen(false);
-
 			}
 
 			formsRectangle = false;

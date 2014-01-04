@@ -155,4 +155,11 @@ public class GameModel implements Serializable {
 			break;
 		}
 	}
+	
+	public boolean hasFinished() {
+		if(getGameMode()==1)
+			return getDrawsLeft()<=0;
+		else
+			return getTimeLeft()<=0;
+	}
 }
