@@ -3,10 +3,11 @@ package Spheres;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-public class GameView extends JPanel {
+public class GameView extends JPanel implements GameListener {
 
 	private GameModel gModel;
 	private GamePanel gPanel;
@@ -103,6 +104,10 @@ public class GameView extends JPanel {
 		westPa.add(new JLabel());
 		// ------------------------Zeit / Züge-Label
 		timeDrawsLeftLa = new JLabel();
+		if(gModel.getGameMode()==1)
+		 timeDrawsLeftLa.setText(Long.toString(gModel.getDrawsLeft()));
+		else
+			timeDrawsLeftLa.setText(SimpleDateFormat.getTimeInstance().format(gModel.getTimeLeft()));
 		timeDrawsLeftLa.setBorder(timeDrawsLeftBrd);
 		westPa.add(timeDrawsLeftLa);
 
@@ -176,13 +181,6 @@ public class GameView extends JPanel {
 		pointsLa.setText(points);
 	}
 
-	public void setTimeDraftsLeftLa() {
-		if (gModel.getGameMode() == 0)
-			timeDrawsLeftLa.setText(gModel.getTimeLeft());
-		else
-			timeDrawsLeftLa.setText(gModel.getDrawsLeft());
-	}
-
 	public void setCBB() {
 		cbBrd.setTitle(gModel.getCBCount());
 	}
@@ -238,5 +236,34 @@ public class GameView extends JPanel {
 
 	public GamePanel getGamePanel() {
 		return gPanel;
+	}
+
+	@Override
+	public void notify(GameChangeEvent event) {
+		switch (event.getType()) {
+		case DRAWS_CHANGED:
+			if (gModel.getGameMode() == 1)
+				timeDrawsLeftLa.setText(Long.toString(event.getNewValue()));
+			break;
+		case TIME_CHANGED:
+			if (gModel.getGameMode() == 1)
+				timeDrawsLeftLa.setText(SimpleDateFormat.getTimeInstance().format(new Date(event.getNewValue())));
+			break;
+		case POINTS_CHANGED:
+			pointsLa.setText(Long.toString(event.getNewValue()));
+			break;
+		case BRONSON_CHANGED:
+			cbBrd.setTitle(Long.toString(event.getNewValue()));
+			break;
+		case NORRIS_CHANGED:
+			cnBrd.setTitle(Long.toString(event.getNewValue()));
+			break;
+		case SEAGAL_CHANGED:
+			ssBrd.setTitle(Long.toString(event.getNewValue()));
+			break;			
+		default:
+			break;
+		}
+
 	}
 }

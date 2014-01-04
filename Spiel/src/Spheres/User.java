@@ -6,6 +6,10 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6359032272009837832L;
 	private String name, pass;
 	private Integer points, cbAnz, ssAnz, cnAnz;
 	private ColorSet colorChoice;
@@ -48,6 +52,18 @@ public class User implements Serializable {
 	}
 	public void addCN(int anz){
 		cnAnz+=anz;
+	}
+	
+	public void setCbAnz(Integer cbAnz) {
+		this.cbAnz = cbAnz;
+	}
+	
+	public void setCnAnz(Integer cnAnz) {
+		this.cnAnz = cnAnz;
+	}
+	
+	public void setSsAnz(Integer ssAnz) {
+		this.ssAnz = ssAnz;
 	}
 
 	public boolean checkTimeTopTen(int count) {

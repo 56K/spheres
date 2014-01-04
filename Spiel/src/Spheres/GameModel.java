@@ -3,23 +3,29 @@ package Spheres;
 import java.awt.Color;
 import java.awt.Point;
 import java.io.Serializable;
-import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import Spheres.GameChangeEvent.EventType;
 
 public class GameModel implements Serializable {
 
 	private Ball[][] balls;
 	private int gameMode;
 	private User user;
-	private Time timeLeft;
+	private long timeLeft;
 	private int drawsLeft;
-
+	private List<GameListener> listeners;
+	
 	// Konstruktor
 	public GameModel(int modeArgs, User userArgs) {
 		user = userArgs;
 		gameMode = modeArgs;
-		timeLeft = new Time(60000);
+		timeLeft = TimeUnit.SECONDS.toMillis(60);
 		drawsLeft = 30;
 		balls = new Ball[6][6];
+		this.listeners = new ArrayList<>();
 	}
 
 	public String getUsername() {
@@ -46,26 +52,26 @@ public class GameModel implements Serializable {
 		return i.toString();
 	}
 
-	public void setTimeLeft(Time time) {
+	public void setTimeLeft(long time) {
 		timeLeft = time;
+		fireGameEvent(new GameChangeEvent(EventType.TIME_CHANGED, time));
 	}
 
-	public String getTimeLeft() {
-		String time = timeLeft.toString();
-		return time;
+	public long getTimeLeft() {
+		return timeLeft;
 	}
 
 	public void subDraws() {
-		drawsLeft -= 1;
+		setDrawsLeft(getDrawsLeft()-1);
 	}
 
 	public void setDrawsLeft(int draws) {
 		drawsLeft = draws;
+		fireGameEvent(new GameChangeEvent(EventType.DRAWS_CHANGED, draws));
 	}
 
-	public String getDrawsLeft() {
-		Integer draws = (Integer) drawsLeft;
-		return draws.toString();
+	public int getDrawsLeft() {
+		return drawsLeft;
 	}
 
 	public int getGameMode() {
@@ -100,6 +106,7 @@ public class GameModel implements Serializable {
 		}
 		balls[pos.x][0] = new Ball(pos.x, 0, getColorSet().newRandomColor());
 		user.addPoints(1);
+		fireGameEvent(new GameChangeEvent(EventType.POINTS_CHANGED, user.getPoints()));
 	}
 
 	public void deleteColor(Color ballColor) {
@@ -109,6 +116,43 @@ public class GameModel implements Serializable {
 				if (ball.getBallColor().equals(ballColor))
 					deleteBall(ball);
 			}
+		}
+	}
+	
+	protected void fireGameEvent(GameChangeEvent event) {
+		for (GameListener listener : listeners) {
+			listener.notify(event);
+		}
+	}
+	
+	public void addGameListener(GameListener listener) {
+		listeners.add(listener);
+	}
+	
+	public void removeGameListener(GameListener listener) {
+		listeners.add(listener);
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void userJoker(Joker joker) {
+		switch (joker) {
+		case BRONSON:
+			user.setCbAnz(user.getCbAnz()-1);
+			fireGameEvent(new GameChangeEvent(EventType.BRONSON_CHANGED, user.getCbAnz()));
+			break;
+		case SEAGAL:
+			user.setSsAnz(user.getSsAnz()-1);
+			fireGameEvent(new GameChangeEvent(EventType.SEAGAL_CHANGED, user.getSsAnz()));
+			break;
+		case NORRIS:
+			user.setCnAnz(user.getCnAnz()-1);
+			fireGameEvent(new GameChangeEvent(EventType.NORRIS_CHANGED, user.getCnAnz()));
+			break;
+		default:
+			break;
 		}
 	}
 }
