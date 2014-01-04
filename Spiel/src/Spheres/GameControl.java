@@ -1,6 +1,7 @@
 package Spheres;
 
 //Bibliotheken
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,8 @@ import javax.swing.JButton;
 
 import Spheres.GameChangeEvent.EventType;
 
-public class GameControl implements SlidingPanel.AnimtationListener, GameListener {
+public class GameControl implements SlidingPanel.AnimtationListener,
+		GameListener {
 
 	// Datenfelder
 	private GameView gView;
@@ -30,7 +32,8 @@ public class GameControl implements SlidingPanel.AnimtationListener, GameListene
 	private Spheres spheres;
 
 	// Konstruktor
-	public GameControl(GameView gViewArgs, GameModel gModelArgs, Spheres spheresArgs) {
+	public GameControl(GameView gViewArgs, GameModel gModelArgs,
+			Spheres spheresArgs) {
 		spheres = spheresArgs;
 		gView = gViewArgs;
 		gModel = gModelArgs;
@@ -88,7 +91,8 @@ public class GameControl implements SlidingPanel.AnimtationListener, GameListene
 
 	class ShopListener implements ActionListener {
 		public void actionPerformed(ActionEvent shop) {
-
+			animator.pause(true);
+			spheres.navigateTo(new Shop(spheres, gModel.getUser(), gView));
 		}
 	}
 
@@ -103,7 +107,7 @@ public class GameControl implements SlidingPanel.AnimtationListener, GameListene
 			User user = gModel.getUser();
 			if (user.getCbAnz() > 0) {
 				activeJoker = Joker.BRONSON;
-				gModel.userJoker(activeJoker);
+				gModel.useJoker(activeJoker);
 			}
 		}
 	}
@@ -117,7 +121,7 @@ public class GameControl implements SlidingPanel.AnimtationListener, GameListene
 					((JButton) source).setEnabled(false);
 
 				}
-				gModel.userJoker(Joker.NORRIS);
+				gModel.useJoker(Joker.NORRIS);
 				if (gModel.getGameMode() == 1)
 					gModel.setDrawsLeft(gModel.getDrawsLeft() + 5);
 				else
@@ -137,7 +141,7 @@ public class GameControl implements SlidingPanel.AnimtationListener, GameListene
 			}
 			if (user.getSsAnz() > 0) {
 				activeJoker = Joker.SEAGAL;
-				gModel.userJoker(activeJoker);
+				gModel.useJoker(activeJoker);
 			}
 		}
 	}
@@ -213,7 +217,16 @@ public class GameControl implements SlidingPanel.AnimtationListener, GameListene
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
+			if (e.getClickCount() == 2) {
+				User user = gModel.getUser();
+				if (user.getCbAnz() > 0) {
+					activeJoker = Joker.BRONSON;
+					gModel.useJoker(activeJoker);
+					Ball ball = getBallAtCoordinate(e.getPoint());
+					if (ball != null)
+						handleJoker(ball);
+				}
+			}
 		}
 
 		@Override
@@ -346,16 +359,20 @@ public class GameControl implements SlidingPanel.AnimtationListener, GameListene
 	}
 
 	@Override
-	public void animationComplete() {
-		animator = new Animator(gModel, gPanel);
-		animator.start();
-		
+	public void animationComplete(Component current) {
+		if (animator == null) {
+			animator = new Animator(gModel, gPanel);
+			animator.start();
+		}
+		if (current == gView)
+			animator.pause(false);
+
 	}
 
 	@Override
 	public void notify(GameChangeEvent event) {
-//		if(event.getType()==EventType.GAME_OVER)			
+		// if(event.getType()==EventType.GAME_OVER)
 		// TODO Highscore slide
-		
+
 	}
 }

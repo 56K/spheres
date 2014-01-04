@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -31,14 +32,20 @@ public abstract class View extends JPanel {
 	private User user;
 
 	private Spheres spheres;
+	private JComponent backAddress;
 
 	public View(Spheres spheresArgs, User konUser) {
+		this(spheresArgs,konUser,null);
+	}
+
+	public View(Spheres spheresArgs, User konUser, JComponent backAddress) {
 		this.spheres = spheresArgs;
 		this.user = konUser;
-
+		this.backAddress = backAddress;
 		generateContent();
 	}
 
+	
 	private void generateContent() {
 		
 		// ##################____geerbtes_Panel_mit_Ojekten_befüllen___#####
@@ -116,8 +123,11 @@ public abstract class View extends JPanel {
 		backB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spheres.navigateTo(new Menu(spheres, user),
-						SlidingPanel.Direction.RIGHT);
+				if(backAddress!=null)
+					spheres.navigateTo(backAddress);
+				else
+					spheres.navigateTo(new Menu(spheres, user),
+							SlidingPanel.Direction.RIGHT);
 				spheres.saveUser(user);
 			}
 		});

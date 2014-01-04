@@ -265,6 +265,7 @@ public class GameView extends JPanel implements GameListener {
 		default:
 			break;
 		}
+		repaint();
 
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,9 +21,12 @@ public class Shop extends View {
 	private User user;
 	private Integer cbPrice, cbCount, cnCount, ssPrice, ssCount, cnPrice,
 			points;
-
 	public Shop(Spheres spheresArgs, User konUser) {
-		super(spheresArgs, konUser);
+		this(spheresArgs,konUser,null);
+	}
+
+	public Shop(Spheres spheresArgs, User konUser, JComponent backAddress) {
+		super(spheresArgs, konUser, backAddress);
 		super.setWhereAmI("Shop");
 		super.setBackBVisibility(true);
 		this.user=konUser;

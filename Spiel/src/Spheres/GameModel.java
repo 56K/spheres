@@ -131,29 +131,30 @@ public class GameModel implements Serializable {
 	
 	public void addGameListener(GameListener listener) {
 		listeners.add(listener);
+		if(user!=null)
+			user.addGameListener(listener);
 	}
 	
 	public void removeGameListener(GameListener listener) {
 		listeners.add(listener);
+		if(user!=null)
+			user.removeGameListener(listener);
 	}
 	
 	public User getUser() {
 		return user;
 	}
 
-	public void userJoker(Joker joker) {
+	public void useJoker(Joker joker) {
 		switch (joker) {
 		case BRONSON:
 			user.setCbAnz(user.getCbAnz()-1);
-			fireGameEvent(new GameChangeEvent(EventType.BRONSON_CHANGED, user.getCbAnz()));
 			break;
 		case SEAGAL:
 			user.setSsAnz(user.getSsAnz()-1);
-			fireGameEvent(new GameChangeEvent(EventType.SEAGAL_CHANGED, user.getSsAnz()));
 			break;
 		case NORRIS:
 			user.setCnAnz(user.getCnAnz()-1);
-			fireGameEvent(new GameChangeEvent(EventType.NORRIS_CHANGED, user.getCnAnz()));
 			break;
 		default:
 			break;

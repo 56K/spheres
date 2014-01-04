@@ -3,6 +3,10 @@ package Spheres;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import Spheres.GameChangeEvent.EventType;
 
 public class User implements Serializable {
 
@@ -15,7 +19,7 @@ public class User implements Serializable {
 	private transient int currentPoints;
 	private ColorSet colorChoice;
 	private int[] timeHigh = { 10 }, drawHigh = { 10 };
-	
+	private transient List<GameListener> listeners;
 
 	public User(String username, String pw) {
 		name = username;
@@ -47,25 +51,28 @@ public class User implements Serializable {
 	}
 	
 	public void addCB(int anz){
-		cbAnz+=anz;
+		setCbAnz(cbAnz+anz);
 	}
 	public void addSS(int anz){
-		ssAnz+=anz;
+		setSsAnz(ssAnz+anz);
 	}
 	public void addCN(int anz){
-		cnAnz+=anz;
+		setCnAnz(cnAnz+anz);
 	}
 	
 	public void setCbAnz(Integer cbAnz) {
 		this.cbAnz = cbAnz;
+		fireGameEvent(new GameChangeEvent(EventType.BRONSON_CHANGED, cbAnz));
 	}
 	
 	public void setCnAnz(Integer cnAnz) {
 		this.cnAnz = cnAnz;
+		fireGameEvent(new GameChangeEvent(EventType.NORRIS_CHANGED, cnAnz));
 	}
 	
 	public void setSsAnz(Integer ssAnz) {
 		this.ssAnz = ssAnz;
+		fireGameEvent(new GameChangeEvent(EventType.SEAGAL_CHANGED, ssAnz));
 	}
 
 	public boolean checkTimeTopTen(int count) {
@@ -248,4 +255,20 @@ public class User implements Serializable {
 		 * */
 		this.colorChoice = colorChoice;
 	}
+	
+	protected void fireGameEvent(GameChangeEvent event) {
+		for (GameListener listener : listeners) {
+			listener.notify(event);
+		}
+	}
+	
+	public void addGameListener(GameListener listener) {
+		if(listeners==null)
+			listeners = new ArrayList<>();
+		listeners.add(listener);
+	}
+	
+	public void removeGameListener(GameListener listener) {
+		listeners.add(listener);
+	}	
 }

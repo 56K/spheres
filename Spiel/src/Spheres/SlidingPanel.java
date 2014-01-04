@@ -77,7 +77,7 @@ public class SlidingPanel extends JPanel {
 						remove(old);
 						old = null;
 						for (AnimtationListener listener : listeners) {
-							listener.animationComplete();
+							listener.animationComplete(current);
 						}
 						break;
 					} else {
@@ -124,6 +124,6 @@ public class SlidingPanel extends JPanel {
 	
 	public static interface AnimtationListener
 	{
-		void animationComplete();
+		void animationComplete(Component target);
 	}
 }
