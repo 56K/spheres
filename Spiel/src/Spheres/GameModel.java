@@ -110,7 +110,7 @@ public class GameModel implements Serializable {
 		}
 		balls[pos.x][0] = new Ball(pos.x, 0, getColorSet().newRandomColor());
 		user.addPoints(1);
-		fireGameEvent(new GameChangeEvent(EventType.POINTS_CHANGED, user.getPoints()));
+		fireGameEvent(new GameChangeEvent(EventType.POINTS_CHANGED, user.getCurrentPoints()));
 	}
 
 	public void deleteColor(Color ballColor) {

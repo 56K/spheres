@@ -12,6 +12,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 6359032272009837832L;
 	private String name, pass;
 	private Integer points, cbAnz, ssAnz, cnAnz;
+	private transient int currentPoints;
 	private ColorSet colorChoice;
 	private int[] timeHigh = { 10 }, drawHigh = { 10 };
 	
@@ -35,6 +36,7 @@ public class User implements Serializable {
 		 * Methode zum addieren erreichter Punkte
 		 */
 		points += add;
+		currentPoints += add;
 	}
 
 	public void subPoints(int sub) {
@@ -153,6 +155,14 @@ public class User implements Serializable {
 		 * Setzt das Punktekonto auf übergebenen Wert
 		 */
 		this.points = points;
+	}
+	
+	public Integer getCurrentPoints() {
+		return currentPoints;
+	}
+	
+	public void setCurrentPoints(int currentPoints) {
+		this.currentPoints = currentPoints;
 	}
 
 	public int[] getTimeHigh() {

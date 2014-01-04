@@ -1,5 +1,8 @@
 package Spheres;
 
+import java.util.TreeMap;
+import java.util.TreeSet;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -10,6 +13,8 @@ public class Highscore extends View {
 	private User user;
 	private Spheres spheres;
 
+	
+	
 	public Highscore(Spheres spheresArgs, User konUser) {
 		super(spheresArgs, konUser);
 		this.spheres = super.getSpheres();
@@ -20,9 +25,8 @@ public class Highscore extends View {
 
 		center = new JPanel();
 		
-		
-		
 		add(center);
-
 	}
+	
 }
+

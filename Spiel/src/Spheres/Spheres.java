@@ -11,6 +11,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -160,11 +164,119 @@ public class Spheres extends WindowAdapter {
 	public void exit() {
 		frame.setVisible(false);
 		frame.dispose();
-		User user = gModel.getUser();
-		if(user!=null)
-			saveUser(user);
+		if(gModel!=null)
+		{
+			User user = gModel.getUser();
+			if(user!=null)
+			{
+				saveUser(user);
+				saveHighscore(user);
+			}			
+		}
 	}
 	
+
+	private void saveHighscore(User user) {
+		SortedSet<HighscoreEntry> timeHighscore = loadTimeHighscore();
+		SortedSet<HighscoreEntry> drawHighscore = loadDrawHighscore();
+		int[] drawHigh = user.getDrawHigh();
+		for (int i : drawHigh) {
+			drawHighscore.add(new HighscoreEntry(i, user.getName()));
+		}
+		
+		int[] timeHigh = user.getTimeHigh();
+		for (int i : timeHigh) {
+			timeHighscore.add(new HighscoreEntry(i, user.getName()));
+		}
+		
+		//alle ausser den besten 10 entfernen
+		while(timeHighscore.size()>10)
+			timeHighscore.remove(timeHighscore.last());
+		while(drawHighscore.size()>10)
+			drawHighscore.remove(drawHighscore.last());
+		
+		String timeString = convertToString(timeHighscore);
+		String drawString = convertToString(drawHighscore);
+		File file = new File("highscore.properties");
+		Properties properties = new Properties();
+		properties.put("timehighscore", timeString);
+		properties.put("drawhighscore", drawString);
+		try {
+			FileOutputStream out = new FileOutputStream(file);
+			properties.store(out, null);
+			out.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht speichern",e);
+		}
+		
+	}
+
+	private String convertToString(SortedSet<HighscoreEntry> timeHighscore) {
+		StringBuilder builder = new StringBuilder();
+		for (HighscoreEntry highscoreEntry : timeHighscore) {
+			builder.append(highscoreEntry.getPoints());
+			builder.append("|");
+			builder.append(highscoreEntry.getUser());
+			builder.append(";");
+		}
+		if(builder.length()>0)
+			builder.setLength(builder.length()-1);
+		return builder.toString();
+	}
+
+	private SortedSet<HighscoreEntry> loadTimeHighscore() {
+		File file = new File("highscore.properties");
+		Properties properties = new Properties();
+		if(file.exists())
+		{
+			try {
+				FileInputStream in = new FileInputStream(file);
+				properties.load(in);
+				in.close();
+			} catch (IOException e) {
+				LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht laden",e);
+			}
+		}
+		SortedSet<HighscoreEntry> highscore = new TreeSet<>();
+		Object object = properties.get("timehighscore");
+		if (object instanceof String) {
+			String highscores = (String) object;
+			String[] entries = highscores.split(";");
+			for (String entry : entries) {
+				String[] result = entry.split("\\|");
+				HighscoreEntry highscoreEntry = new HighscoreEntry(Integer.parseInt(result[0]),result[1]);
+				highscore.add(highscoreEntry);
+			}
+		}
+		return highscore;
+	}
+	
+	private SortedSet<HighscoreEntry> loadDrawHighscore() {
+		File file = new File("highscore.properties");
+		Properties properties = new Properties();
+		if(file.exists())
+		{
+			try {
+				FileInputStream in = new FileInputStream(file);
+				properties.load(in);
+				in.close();
+			} catch (IOException e) {
+				LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht laden",e);
+			}
+		}
+		SortedSet<HighscoreEntry> highscore = new TreeSet<>();
+		Object object = properties.get("drawhighscore");
+		if (object instanceof String) {
+			String highscores = (String) object;
+			String[] entries = highscores.split(";");
+			for (String entry : entries) {
+				String[] result = entry.split("\\|");
+				HighscoreEntry highscoreEntry = new HighscoreEntry(Integer.parseInt(result[0]),result[1]);
+				highscore.add(highscoreEntry);
+			}
+		}
+		return highscore;
+	}	
 
 	public void saveUser(User user) {
 		ObjectOutputStream oos = null;
