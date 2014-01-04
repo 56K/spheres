@@ -16,8 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 
-import Spheres.GameChangeEvent.EventType;
-
 public class GameControl implements SlidingPanel.AnimtationListener,
 		GameListener {
 
@@ -162,6 +160,8 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 
 			}
 			gPanel.setMousePath(mousePath);
+			if(!selectedBalls.isEmpty())
+			gPanel.setLineColor(selectedBalls.getFirst().getBallColor());
 			gPanel.repaint(); // TODO: draw bereich verkleinern
 		}
 
