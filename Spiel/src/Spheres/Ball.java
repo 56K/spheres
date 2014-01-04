@@ -1,7 +1,6 @@
 package Spheres;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.util.Random;
 
 public class Ball extends Random implements Comparable {
@@ -9,28 +8,27 @@ public class Ball extends Random implements Comparable {
 	private Color ballColor;
 	private int pos, oldPos, newPos, diameter, ghostDiameter, xCoord, yCoord,
 			xDist, yDist;
-	private boolean isChoosen, hasRNeigh, hasLNeigh, hasDNeigh, hasUNeigh;
+	private boolean isChoosen, hasRNeig, hasLNeigh, hasDNeig, hasUNeigh;
 
 	public Ball(int position, int colorSet) {
 		pos = position;
-		diameter = 30;
-		ghostDiameter = 40;
-		xDist = 50;
-		yDist = 50;
+		diameter = 15;
+		ghostDiameter = 25;
+		xDist = 30;
+		yDist = 30;
 		xCoord = posToXCoord(pos);
 		yCoord = posToYCoord(pos);
 		oldPos = newPos = pos;
 		setBallColor(colorChooser(colorSet));
-		
 	}
 
 	// =======_Koordinatenumrechnung_============
 	private int posToXCoord(int pos) {
-		return ((pos / 6) * yDist)+25;
+		return ((pos / 6) * yDist)+10;
 	}
 
 	private int posToYCoord(int pos) {
-		return ((pos % 6) * xDist)+25;
+		return ((pos % 6) * xDist)+10;
 	}
 
 	// ============_Farbbestimmung des Balls_==============
@@ -133,12 +131,12 @@ public class Ball extends Random implements Comparable {
 		this.isChoosen = isChoosen;
 	}
 
-	public boolean isHasRNeigh() {
-		return hasRNeigh;
+	public boolean isHasRNeig() {
+		return hasRNeig;
 	}
 
-	public void setHasRNeig(boolean hasRNeigh) {
-		this.hasRNeigh = hasRNeigh;
+	public void setHasRNeig(boolean hasRNeig) {
+		this.hasRNeig = hasRNeig;
 	}
 
 	public boolean isHasLNeigh() {
@@ -149,12 +147,12 @@ public class Ball extends Random implements Comparable {
 		this.hasLNeigh = hasLNeigh;
 	}
 
-	public boolean isHasDNeigh() {
-		return hasDNeigh;
+	public boolean isHasDNeig() {
+		return hasDNeig;
 	}
 
-	public void setHasDNeig(boolean hasDNeigh) {
-		this.hasDNeigh = hasDNeigh;
+	public void setHasDNeig(boolean hasDNeig) {
+		this.hasDNeig = hasDNeig;
 	}
 
 	public boolean isHasUNeigh() {
@@ -170,17 +168,6 @@ public class Ball extends Random implements Comparable {
 	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	
-	
-	//==============_Die_paintComponent-Methode_===========
-	public void draw(Graphics g){
-		g.setColor(ballColor);
-		g.drawOval(xCoord,yCoord,diameter,diameter);
-		g.fillOval(xCoord,yCoord,diameter,diameter);
-	}
-	
-	
-	
 	@Override
 	public int compareTo(Object arg0) {
 		// TODO Auto-generated method stub
