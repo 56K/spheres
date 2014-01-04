@@ -1,77 +1,39 @@
 package Spheres;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.util.Random;
 
 public class Ball extends Random implements Comparable {
 
 	private Color ballColor;
-	private int pos, oldPos, newPos, diameter, ghostDiameter, xCoord, yCoord,
-			xDist, yDist;
-	private boolean isChoosen, hasRNeig, hasLNeigh, hasDNeig, hasUNeigh;
+	private int oldPos, newPos, diameter, ghostDiameter, xCoord, yCoord, xDist,
+			yDist;
+	private boolean isChoosen, hasRNeigh, hasLNeigh, hasDNeigh, hasUNeigh;
+	private int xPos;
+	private int yPos;
 
-	public Ball(int position, int colorSet) {
-		pos = position;
-		diameter = 15;
-		ghostDiameter = 25;
-		xDist = 30;
-		yDist = 30;
-		xCoord = posToXCoord(pos);
-		yCoord = posToYCoord(pos);
-		oldPos = newPos = pos;
-		setBallColor(colorChooser(colorSet));
+	public Ball(int xPosition, int yPosition, Color color) {
+		xPos = xPosition;
+		yPos = yPosition;
+		diameter = 30;
+		ghostDiameter = 40;
+		xDist = 50;
+		yDist = 50;
+		xCoord = posToXCoord(xPos);
+		yCoord = posToYCoord(yPos);
+		setBallColor(color);
+
 	}
 
 	// =======_Koordinatenumrechnung_============
 	private int posToXCoord(int pos) {
-		return ((pos / 6) * yDist)+10;
+		return (pos * xDist) + 25;
 	}
 
 	private int posToYCoord(int pos) {
-		return ((pos % 6) * xDist)+10;
-	}
-
-	// ============_Farbbestimmung des Balls_==============
-	private Color colorChooser(int colorSet) {
-		int x = nextInt(5);
-		switch (x) {
-		case 0:
-			if (colorSet == 1)
-				return Color.BLACK;
-			else if (colorSet == 2)
-				return Color.GRAY.brighter();
-			else
-				return Color.gray;
-		case 1:
-			if (colorSet == 1)
-				return Color.ORANGE;
-			else if (colorSet == 2)
-				return Color.PINK;
-			else
-				return Color.YELLOW;
-		case 2:
-			if (colorSet == 1)
-				return Color.blue.darker();
-			else if (colorSet == 2)
-				return Color.blue.brighter();
-			else
-				return Color.blue;
-		case 3:
-			if (colorSet == 1)
-				return Color.red.darker();
-			else if (colorSet == 2)
-				return Color.red.brighter();
-			else
-				return Color.red;
-		case 4:
-			if (colorSet == 1)
-				return Color.pink.darker();
-			else if (colorSet == 2)
-				return Color.cyan.brighter();
-			else
-				return Color.cyan.darker();
-		}
-		return Color.MAGENTA;
+		return (pos * yDist) + 25;
 	}
 
 	// ====================_setters_and_getters_===============
@@ -83,12 +45,13 @@ public class Ball extends Random implements Comparable {
 		this.ballColor = ballColor;
 	}
 
-	public int getPos() {
-		return pos;
+	public Point getPos() {
+		return new Point(xPos, yPos);
 	}
 
-	public void setPos(int pos) {
-		this.pos = pos;
+	public void setPos(Point pos) {
+		xPos = pos.x;
+		yPos = pos.y;
 	}
 
 	public int getOldPos() {
@@ -131,12 +94,12 @@ public class Ball extends Random implements Comparable {
 		this.isChoosen = isChoosen;
 	}
 
-	public boolean isHasRNeig() {
-		return hasRNeig;
+	public boolean isHasRNeigh() {
+		return hasRNeigh;
 	}
 
-	public void setHasRNeig(boolean hasRNeig) {
-		this.hasRNeig = hasRNeig;
+	public void setHasRNeig(boolean hasRNeigh) {
+		this.hasRNeigh = hasRNeigh;
 	}
 
 	public boolean isHasLNeigh() {
@@ -147,12 +110,12 @@ public class Ball extends Random implements Comparable {
 		this.hasLNeigh = hasLNeigh;
 	}
 
-	public boolean isHasDNeig() {
-		return hasDNeig;
+	public boolean isHasDNeigh() {
+		return hasDNeigh;
 	}
 
-	public void setHasDNeig(boolean hasDNeig) {
-		this.hasDNeig = hasDNeig;
+	public void setHasDNeig(boolean hasDNeigh) {
+		this.hasDNeigh = hasDNeigh;
 	}
 
 	public boolean isHasUNeigh() {
@@ -163,11 +126,19 @@ public class Ball extends Random implements Comparable {
 		this.hasUNeigh = hasUNeigh;
 	}
 
+	// ==============_Die_paintComponent-Methode_===========
+	public void draw(Graphics g) {
+		g.setColor(ballColor);
+		g.drawOval(xCoord, yCoord, diameter, diameter);
+		g.fillOval(xCoord, yCoord, diameter, diameter);
+	}
+
 	/***********************************************************************************
 	 * Vergleicht Farben (non-Javadoc)
 	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
+
 	@Override
 	public int compareTo(Object arg0) {
 		// TODO Auto-generated method stub

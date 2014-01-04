@@ -7,7 +7,8 @@ import java.io.Serializable;
 public class User implements Serializable {
 
 	private String name, pass;
-	private Integer points, cbAnz, ssAnz, cnAnz, colorChoice;
+	private Integer points, cbAnz, ssAnz, cnAnz;
+	private ColorSet colorChoice;
 	private int[] timeHigh = { 10 }, drawHigh = { 10 };
 	
 
@@ -20,19 +21,7 @@ public class User implements Serializable {
 		cbAnz=0;
 		ssAnz=0;
 		cnAnz=0;
-		colorChoice=0;
-	}
-
-	public User(String username, String pw, int count, int[] tHigh, int[] dHigh) {
-		name = username;
-		pass = pw;
-		points = count;
-		timeHigh = tHigh;
-		drawHigh = dHigh;
-		cbAnz=0;
-		ssAnz=0;
-		cnAnz=0;
-		colorChoice=0;
+		colorChoice=ColorSet.NORMAL;
 	}
 
 	// +++++++++++_Methoden_zum_ändern_von_Varialblen_++++++++++
@@ -220,14 +209,14 @@ public class User implements Serializable {
 		return cnAnz.toString();
 	}
 
-	public Integer getColorChoice() {
+	public ColorSet getColorChoice() {
 		/**
 		 * Gibt die Farbwahl der Kugeln als Interger zurück
 		 */
 		return colorChoice;
 	}
 
-	public void setColorChoice(Integer colorChoice) {
+	public void setColorChoice(ColorSet colorChoice) {
 		/******
 		 * Setzt die Farbwahl als Integer 		 
 		 * */

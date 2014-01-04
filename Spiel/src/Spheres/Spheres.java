@@ -10,6 +10,7 @@ public class Spheres extends WindowClosingAdapter {
 	private SlidingPanel content;
 	private GameView gView;
 	private GameModel gModel;
+	private GameControl gControl;
 
 	public Spheres() {
 		ViewLogin logView = new ViewLogin(this);
@@ -28,7 +29,6 @@ public class Spheres extends WindowClosingAdapter {
 
 	public static void main(String[] args) {
 		new Spheres();
-		// new Ball(0,0);
 
 	}
 
@@ -43,6 +43,7 @@ public class Spheres extends WindowClosingAdapter {
 	public void startGame(int mode, User user) {
 		gModel = new GameModel(mode, user);
 		gView = new GameView(gModel);
+		gControl = new GameControl(gView, gModel);
 		navigateTo(gView);
 	}
 }

@@ -78,19 +78,19 @@ public class UserSettings extends View {
 		color1RB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				user.setColorChoice(0);
+				user.setColorChoice(ColorSet.BRIGHT);
 			}
 		});
 		color2RB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				user.setColorChoice(1);
+				user.setColorChoice(ColorSet.NORMAL);
 			}
 		});
 		color3RB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				user.setColorChoice(2);
+				user.setColorChoice(ColorSet.DARK);
 			}
 		});
 		centerPa.add(new JLabel(" "));
