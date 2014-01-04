@@ -93,6 +93,7 @@ public class ViewLogin extends JPanel {
 		loginB.setToolTipText(REGTXT);
 		loginB.setMnemonic(KeyEvent.VK_L);
 		center.add(loginB);
+		spheres.getFrame().getRootPane().setDefaultButton(loginB);
 		loginB.addActionListener(new ActionListener() {
 			// Annonyme Listenerklasse für den Loginbutton
 			@Override

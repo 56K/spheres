@@ -11,7 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Iterator;
 import java.util.Properties;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -20,12 +19,14 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 import Spheres.SlidingPanel.Direction;
 
 public class Spheres extends WindowAdapter {
 
-	private static final Logger LOGGER = Logger.getLogger(Spheres.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Spheres.class
+			.getName());
 	private SlidingPanel content;
 	private GameView gView;
 	private GameModel gModel;
@@ -33,21 +34,28 @@ public class Spheres extends WindowAdapter {
 	private JFrame frame;
 
 	public Spheres() {
+		frame = new JFrame("SphereS");
 		ViewLogin logView = new ViewLogin(this);
 
 		content = new SlidingPanel();
 		content.add(logView);
 
-		frame = new JFrame("SphereS");
 		frame.setLocation(350, 250);
 		frame.setSize(500, 500);
 		frame.getContentPane().add(content);
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.addWindowListener(this);
+
 	}
 
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception ex) {
+			// Just print stacktrace here since it's an example.
+			ex.printStackTrace();
+		}
 		new Spheres();
 
 	}
@@ -67,7 +75,7 @@ public class Spheres extends WindowAdapter {
 		content.addAnimationListener(gControl);
 		navigateTo(gView);
 	}
-	
+
 	// ================== Innere Klassen ========================
 	public boolean createUser(String user, String pw) {
 		MessageDigest digest;
@@ -159,22 +167,19 @@ public class Spheres extends WindowAdapter {
 			}
 		}
 		return null;
-	}	
-	
+	}
+
 	public void exit() {
 		frame.setVisible(false);
 		frame.dispose();
-		if(gModel!=null)
-		{
+		if (gModel != null) {
 			User user = gModel.getUser();
-			if(user!=null)
-			{
+			if (user != null) {
 				saveUser(user);
 				saveHighscore(user);
-			}			
+			}
 		}
 	}
-	
 
 	private void saveHighscore(User user) {
 		SortedSet<HighscoreEntry> timeHighscore = loadTimeHighscore();
@@ -183,18 +188,18 @@ public class Spheres extends WindowAdapter {
 		for (int i : drawHigh) {
 			drawHighscore.add(new HighscoreEntry(i, user.getName()));
 		}
-		
+
 		int[] timeHigh = user.getTimeHigh();
 		for (int i : timeHigh) {
 			timeHighscore.add(new HighscoreEntry(i, user.getName()));
 		}
-		
-		//alle ausser den besten 10 entfernen
-		while(timeHighscore.size()>10)
+
+		// alle ausser den besten 10 entfernen
+		while (timeHighscore.size() > 10)
 			timeHighscore.remove(timeHighscore.last());
-		while(drawHighscore.size()>10)
+		while (drawHighscore.size() > 10)
 			drawHighscore.remove(drawHighscore.last());
-		
+
 		String timeString = convertToString(timeHighscore);
 		String drawString = convertToString(drawHighscore);
 		File file = new File("highscore.properties");
@@ -206,9 +211,10 @@ public class Spheres extends WindowAdapter {
 			properties.store(out, null);
 			out.close();
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht speichern",e);
+			LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht speichern",
+					e);
 		}
-		
+
 	}
 
 	private String convertToString(SortedSet<HighscoreEntry> timeHighscore) {
@@ -219,22 +225,22 @@ public class Spheres extends WindowAdapter {
 			builder.append(highscoreEntry.getUser());
 			builder.append(";");
 		}
-		if(builder.length()>0)
-			builder.setLength(builder.length()-1);
+		if (builder.length() > 0)
+			builder.setLength(builder.length() - 1);
 		return builder.toString();
 	}
 
 	private SortedSet<HighscoreEntry> loadTimeHighscore() {
 		File file = new File("highscore.properties");
 		Properties properties = new Properties();
-		if(file.exists())
-		{
+		if (file.exists()) {
 			try {
 				FileInputStream in = new FileInputStream(file);
 				properties.load(in);
 				in.close();
 			} catch (IOException e) {
-				LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht laden",e);
+				LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht laden",
+						e);
 			}
 		}
 		SortedSet<HighscoreEntry> highscore = new TreeSet<>();
@@ -244,24 +250,25 @@ public class Spheres extends WindowAdapter {
 			String[] entries = highscores.split(";");
 			for (String entry : entries) {
 				String[] result = entry.split("\\|");
-				HighscoreEntry highscoreEntry = new HighscoreEntry(Integer.parseInt(result[0]),result[1]);
+				HighscoreEntry highscoreEntry = new HighscoreEntry(
+						Integer.parseInt(result[0]), result[1]);
 				highscore.add(highscoreEntry);
 			}
 		}
 		return highscore;
 	}
-	
+
 	private SortedSet<HighscoreEntry> loadDrawHighscore() {
 		File file = new File("highscore.properties");
 		Properties properties = new Properties();
-		if(file.exists())
-		{
+		if (file.exists()) {
 			try {
 				FileInputStream in = new FileInputStream(file);
 				properties.load(in);
 				in.close();
 			} catch (IOException e) {
-				LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht laden",e);
+				LOGGER.log(Level.SEVERE, "Konnte Highscore Datei nicht laden",
+						e);
 			}
 		}
 		SortedSet<HighscoreEntry> highscore = new TreeSet<>();
@@ -271,12 +278,13 @@ public class Spheres extends WindowAdapter {
 			String[] entries = highscores.split(";");
 			for (String entry : entries) {
 				String[] result = entry.split("\\|");
-				HighscoreEntry highscoreEntry = new HighscoreEntry(Integer.parseInt(result[0]),result[1]);
+				HighscoreEntry highscoreEntry = new HighscoreEntry(
+						Integer.parseInt(result[0]), result[1]);
 				highscore.add(highscoreEntry);
 			}
 		}
 		return highscore;
-	}	
+	}
 
 	public void saveUser(User user) {
 		ObjectOutputStream oos = null;
@@ -300,9 +308,13 @@ public class Spheres extends WindowAdapter {
 				}
 		}
 	}
-	
+
 	@Override
 	public void windowClosing(WindowEvent event) {
 		exit();
+	}
+
+	public JFrame getFrame() {
+		return frame;
 	}
 }
