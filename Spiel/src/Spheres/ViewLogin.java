@@ -7,16 +7,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
@@ -109,8 +99,8 @@ public class ViewLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Username = usertf.getText();
 				Password = new String(PWpf.getPassword());
-				if (authenticate(Username, Password))
-					spheres.navigateTo(new Menu(spheres, loadProperties(Username)));
+				if (spheres.authenticate(Username, Password))
+					spheres.navigateTo(new Menu(spheres, spheres.loadProperties(Username)));
 				else
 					setError("Benutzername oder Passwort falsch !");
 			}
@@ -136,9 +126,10 @@ public class ViewLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Username = usertf.getText();
 				Password = new String(PWpf.getPassword());
-
-				if (createUser(Username, Password))
-					spheres.navigateTo(new Menu(spheres, loadProperties(Username)));
+				if(spheres.createUser(Username, Password))
+					spheres.navigateTo(new Menu(spheres, spheres.loadProperties(Username)));
+				else
+					setError("Benutzername bereits vorhanden !");
 			}
 		});
 		beendenB = new JButton("EXIT");
@@ -170,97 +161,4 @@ public class ViewLogin extends JPanel {
 		errorLa.setText(msg);
 	}
 
-	// ================== Innere Klassen ========================
-	private boolean createUser(String user, String pw) {
-		MessageDigest digest;
-		try {
-			digest = MessageDigest.getInstance("MD5");
-			byte[] result = digest.digest(pw.getBytes());
-			String hashValue = new String(result);
-			User benutzer = loadProperties(user);
-			if (benutzer != null) {
-				setError("Benutzername bereits vorhanden !");
-				return false;
-			}
-			newUserFile(user, hashValue);
-		} catch (NoSuchAlgorithmException e) {
-			LOGGER.log(Level.SEVERE, "MD5 Algorithmus nicht gefunden", e);
-		}
-		return true;
-	}
-
-	boolean authenticate(String user, String pw) {
-		try {
-			MessageDigest digest = MessageDigest.getInstance("MD5");
-			byte[] result = digest.digest(pw.getBytes());
-			String hashValue = new String(result);
-			User benutzer = loadProperties(user);
-			if (benutzer == null)
-				return false;
-			String passwordHash = benutzer.getPass();
-			return hashValue.equals(passwordHash);
-		} catch (NoSuchAlgorithmException e) {
-			LOGGER.log(Level.SEVERE, "MD5 Digester nicht gefunden");
-		}
-		return false;
-	}
-
-	private void newUserFile(String user, String pw) {
-		FileOutputStream fos = null;
-		File userData = new File(user);
-		ObjectOutputStream oos = null;
-		User benutzer = new User(user, pw);
-		try {
-			fos = new FileOutputStream(userData);
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(benutzer);
-
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE,
-					"Properties konnten nicht gespeichert werden", e);
-		} finally {
-			if (oos != null)
-				try {
-					oos.close();
-				} catch (IOException e) {
-					LOGGER.log(Level.WARNING,
-							"Properties konnten nicht geschlossen werden", e);
-				}
-		}
-	}
-
-	private User loadProperties(String username) {
-		User benutzer = null;
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-		File userName = new File(username);
-		if (userName.exists()) {
-			try {
-				fis = new FileInputStream(userName);
-				ois = new ObjectInputStream(fis);
-				benutzer = (User) ois.readObject();
-				return benutzer;
-			} catch (FileNotFoundException e) {
-				LOGGER.log(Level.WARNING,
-						" File username konnte nicht gefunden", e);
-			} catch (IOException e) {
-				LOGGER.log(Level.SEVERE,
-						"user.properties konnten nicht geladen werden", e);
-			} catch (ClassNotFoundException e) {
-				LOGGER.log(Level.SEVERE,
-						"Class User konnte nicht geladen werden", e);
-			} finally {
-				if (ois != null)
-					try {
-						ois.close();
-					} catch (IOException e) {
-						LOGGER.log(
-								Level.WARNING,
-								"ObjectInputStream konnten nicht geschlossen werden",
-								e);
-					}
-			}
-		}
-		return null;
-	}
 }

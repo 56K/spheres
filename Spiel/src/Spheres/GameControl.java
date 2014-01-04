@@ -15,7 +15,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 
-public class GameControl implements SlidingPanel.AnimtationListener {
+import Spheres.GameChangeEvent.EventType;
+
+public class GameControl implements SlidingPanel.AnimtationListener, GameListener {
 
 	// Datenfelder
 	private GameView gView;
@@ -25,9 +27,11 @@ public class GameControl implements SlidingPanel.AnimtationListener {
 	private Deque<Ball> selectedBalls;
 	private Joker activeJoker;
 	private Animator animator;
+	private Spheres spheres;
 
 	// Konstruktor
-	public GameControl(GameView gViewArgs, GameModel gModelArgs) {
+	public GameControl(GameView gViewArgs, GameModel gModelArgs, Spheres spheresArgs) {
+		spheres = spheresArgs;
 		gView = gViewArgs;
 		gModel = gModelArgs;
 		gPanel = gViewArgs.getGamePanel();
@@ -58,7 +62,7 @@ public class GameControl implements SlidingPanel.AnimtationListener {
 		gView.setCNB();
 		gView.setSSB();
 		gView.setUsername();
-		gView.setPoints("0");
+		gView.setPoints(gModel.getPointsString());
 	}
 
 	// ------ befüllt das Grid nach dem Spielstart mit Bällen ----
@@ -77,7 +81,7 @@ public class GameControl implements SlidingPanel.AnimtationListener {
 	class ExitListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent exit) {
-			System.exit(0);
+			spheres.exit();
 		}
 
 	}
@@ -345,6 +349,13 @@ public class GameControl implements SlidingPanel.AnimtationListener {
 	public void animationComplete() {
 		animator = new Animator(gModel, gPanel);
 		animator.start();
+		
+	}
+
+	@Override
+	public void notify(GameChangeEvent event) {
+//		if(event.getType()==EventType.GAME_OVER)			
+		// TODO Highscore slide
 		
 	}
 }

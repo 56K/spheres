@@ -55,6 +55,8 @@ public class GameModel implements Serializable {
 	public void setTimeLeft(long time) {
 		timeLeft = time;
 		fireGameEvent(new GameChangeEvent(EventType.TIME_CHANGED, time));
+		if(time<=0)
+			fireGameEvent(new GameChangeEvent(EventType.GAME_OVER, 0));
 	}
 
 	public long getTimeLeft() {
@@ -68,6 +70,8 @@ public class GameModel implements Serializable {
 	public void setDrawsLeft(int draws) {
 		drawsLeft = draws;
 		fireGameEvent(new GameChangeEvent(EventType.DRAWS_CHANGED, draws));
+		if(draws<=0)
+			fireGameEvent(new GameChangeEvent(EventType.GAME_OVER, 0));
 	}
 
 	public int getDrawsLeft() {

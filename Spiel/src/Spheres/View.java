@@ -85,8 +85,8 @@ public abstract class View extends JPanel {
 		beendenB.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveUser(user);
-				System.exit(0);
+				spheres.saveUser(user);
+				spheres.exit();
 			}
 		});
 
@@ -102,7 +102,7 @@ public abstract class View extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				spheres.navigateTo(new ViewLogin(spheres),
 						SlidingPanel.Direction.RIGHT);
-				saveUser(user);
+				spheres.saveUser(user);
 			}
 		});
 
@@ -118,7 +118,7 @@ public abstract class View extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				spheres.navigateTo(new Menu(spheres, user),
 						SlidingPanel.Direction.RIGHT);
-				saveUser(user);
+				spheres.saveUser(user);
 			}
 		});
 	}
@@ -144,26 +144,4 @@ public abstract class View extends JPanel {
 		backB.setVisible(bool);
 	}
 
-	public void saveUser(User user) {
-		ObjectOutputStream oos = null;
-		FileOutputStream fos = null;
-		File userName = null;
-		try {
-			userName = new File(user.getName());
-			fos = new FileOutputStream(userName);
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(user);
-		} catch (IOException e1) {
-			LOGGER.log(Level.SEVERE, "User konnten nicht gespeichert werden",
-					e1);
-		} finally {
-			if (oos != null)
-				try {
-					oos.close();
-				} catch (IOException e1) {
-					LOGGER.log(Level.WARNING,
-							"User konnten nicht geschlossen werden", e1);
-				}
-		}
-	}
 }
