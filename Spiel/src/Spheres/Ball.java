@@ -1,11 +1,15 @@
 package Spheres;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.Random;
 
-public class Ball extends Random implements Comparable {
+public class Ball extends Random {
 
 	private Color ballColor;
 	private int oldPos, newPos, diameter, ghostDiameter, xCoord, yCoord, xDist,
@@ -52,6 +56,8 @@ public class Ball extends Random implements Comparable {
 	public void setPos(Point pos) {
 		xPos = pos.x;
 		yPos = pos.y;
+		xCoord = posToXCoord(xPos);
+		yCoord = posToYCoord(yPos);
 	}
 
 	public int getOldPos() {
@@ -110,7 +116,7 @@ public class Ball extends Random implements Comparable {
 		this.hasLNeigh = hasLNeigh;
 	}
 
-	public boolean isHasDNeigh() {
+	protected boolean isHasDNeigh() {
 		return hasDNeigh;
 	}
 
@@ -127,10 +133,20 @@ public class Ball extends Random implements Comparable {
 	}
 
 	// ==============_Die_paintComponent-Methode_===========
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		g.setColor(ballColor);
-		g.drawOval(xCoord, yCoord, diameter, diameter);
+		if(isChoosen)
+		{
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+			int extendedDiameter = ghostDiameter - diameter;
+			g.fillOval(xCoord-extendedDiameter/2, yCoord-extendedDiameter/2, ghostDiameter, ghostDiameter);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		}
 		g.fillOval(xCoord, yCoord, diameter, diameter);
+		if(isChoosen) {
+			g.setColor(Color.BLACK);
+			g.drawOval(xCoord, yCoord, diameter, diameter);			
+		}
 	}
 
 	/***********************************************************************************
@@ -139,9 +155,13 @@ public class Ball extends Random implements Comparable {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 
-	@Override
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public boolean contains(Point point) {
+		Double boundingBox = new Rectangle2D.Double(xCoord, yCoord, ghostDiameter, ghostDiameter);
+		return boundingBox.contains(point);
+	}
+	
+	public Point getCenter() {
+		return new Point(xCoord+diameter/2, yCoord+diameter/2);
 	}
 }
