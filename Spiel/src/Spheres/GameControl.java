@@ -218,10 +218,14 @@ public class GameControl {
 					for (Ball ball : selectedBalls) {
 						ball.setChoosen(false);
 						gModel.deleteBall(ball);
-					}				
+					}
+					gModel.subDraws();
 				}
+				else if(!selectedBalls.isEmpty())
+					selectedBalls.peek().setChoosen(false);
 				
 			}
+			
 			formsRectangle = false;
 			selectedBalls.clear();
 			gPanel.repaint();

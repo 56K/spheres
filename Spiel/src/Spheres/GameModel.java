@@ -55,6 +55,10 @@ public class GameModel implements Serializable {
 		return time;
 	}
 
+	public void subDraws() {
+		drawsLeft -= 1;
+	}
+
 	public void setDrawsLeft(int draws) {
 		drawsLeft = draws;
 	}
@@ -95,6 +99,7 @@ public class GameModel implements Serializable {
 			balls[pos.x][i + 1] = current;
 		}
 		balls[pos.x][0] = new Ball(pos.x, 0, getColorSet().newRandomColor());
+		user.addPoints(1);
 	}
 
 	public void deleteColor(Color ballColor) {
