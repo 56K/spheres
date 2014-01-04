@@ -44,6 +44,7 @@ public class Spheres extends WindowClosingAdapter {
 		gModel = new GameModel(mode, user);
 		gView = new GameView(gModel);
 		gControl = new GameControl(gView, gModel);
+		content.addAnimationListener(gControl);
 		navigateTo(gView);
 	}
 }

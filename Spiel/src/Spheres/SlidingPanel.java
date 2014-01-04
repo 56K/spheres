@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -14,6 +16,7 @@ public class SlidingPanel extends JPanel {
 	private int delay = 10;
 	private int animationDuration = 300;
 	private int animtationSteps = animationDuration / delay;
+	private List<AnimtationListener> listeners = new ArrayList<>();
 
 	public SlidingPanel() {
 		setLayout(new BorderLayout());
@@ -36,6 +39,11 @@ public class SlidingPanel extends JPanel {
 		return comp;
 	}
 
+	public void addAnimationListener(AnimtationListener listener)
+	{
+		listeners.add(listener);
+	}
+	
 	@Override
 	public void add(Component comp, Object constraints) {
 		super.add(comp);
@@ -68,6 +76,9 @@ public class SlidingPanel extends JPanel {
 					if (current.getLocation().x == 0) {
 						remove(old);
 						old = null;
+						for (AnimtationListener listener : listeners) {
+							listener.animationComplete();
+						}
 						break;
 					} else {
 						int distance = getWidth() / animtationSteps;
@@ -100,6 +111,7 @@ public class SlidingPanel extends JPanel {
 						remove(old);
 						break;
 					}
+					
 				}
 
 			}
@@ -108,5 +120,10 @@ public class SlidingPanel extends JPanel {
 
 	public static enum Direction {
 		LEFT, RIGHT;
+	}
+	
+	public static interface AnimtationListener
+	{
+		void animationComplete();
 	}
 }

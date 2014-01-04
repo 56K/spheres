@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 
-public class GameControl {
+public class GameControl implements SlidingPanel.AnimtationListener {
 
 	// Datenfelder
 	private GameView gView;
@@ -24,6 +24,7 @@ public class GameControl {
 	private Path2D mousePath;
 	private Deque<Ball> selectedBalls;
 	private Joker activeJoker;
+	private Animator animator;
 
 	// Konstruktor
 	public GameControl(GameView gViewArgs, GameModel gModelArgs) {
@@ -338,5 +339,12 @@ public class GameControl {
 		}
 
 		return selectedBalls.size() > 2 && !selectedBalls.peek().equals(ball);
+	}
+
+	@Override
+	public void animationComplete() {
+		animator = new Animator(gModel, gPanel);
+		animator.start();
+		
 	}
 }

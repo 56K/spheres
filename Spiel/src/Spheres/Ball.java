@@ -2,7 +2,6 @@ package Spheres;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
@@ -14,6 +13,7 @@ public class Ball extends Random {
 	private Color ballColor;
 	private int oldPos, newPos, diameter, ghostDiameter, xCoord, yCoord, xDist,
 			yDist;
+	private int targetY;
 	private boolean isChoosen, hasRNeigh, hasLNeigh, hasDNeigh, hasUNeigh;
 	private int xPos;
 	private int yPos;
@@ -26,7 +26,8 @@ public class Ball extends Random {
 		xDist = 50;
 		yDist = 50;
 		xCoord = posToXCoord(xPos);
-		yCoord = posToYCoord(yPos);
+		targetY = posToYCoord(yPos);
+		yCoord = 0;
 		setBallColor(color);
 
 	}
@@ -57,7 +58,7 @@ public class Ball extends Random {
 		xPos = pos.x;
 		yPos = pos.y;
 		xCoord = posToXCoord(xPos);
-		yCoord = posToYCoord(yPos);
+		targetY = posToYCoord(yPos);
 	}
 
 	public int getOldPos() {
@@ -163,5 +164,13 @@ public class Ball extends Random {
 	
 	public Point getCenter() {
 		return new Point(xCoord+diameter/2, yCoord+diameter/2);
+	}
+	
+	public void fallIfNecessary(int increment) {
+		if(targetY!=yCoord)
+		{
+			yCoord += increment;
+			targetY = Math.max(targetY, yCoord);
+		}
 	}
 }

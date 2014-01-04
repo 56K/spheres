@@ -25,6 +25,7 @@ public class GameView extends JPanel implements GameListener {
 	private TitledBorder cbBrd, ssBrd, cnBrd, pointsBrd, nameBrd,
 			timeDrawsLeftBrd;
 
+	private SimpleDateFormat format = new SimpleDateFormat("mm:ss");
 	// Konstruktor
 	public GameView(GameModel gModelArgs) {
 		super();
@@ -107,7 +108,7 @@ public class GameView extends JPanel implements GameListener {
 		if(gModel.getGameMode()==1)
 		 timeDrawsLeftLa.setText(Long.toString(gModel.getDrawsLeft()));
 		else
-			timeDrawsLeftLa.setText(SimpleDateFormat.getTimeInstance().format(gModel.getTimeLeft()));
+			timeDrawsLeftLa.setText(format.format(gModel.getTimeLeft()));
 		timeDrawsLeftLa.setBorder(timeDrawsLeftBrd);
 		westPa.add(timeDrawsLeftLa);
 
@@ -246,8 +247,8 @@ public class GameView extends JPanel implements GameListener {
 				timeDrawsLeftLa.setText(Long.toString(event.getNewValue()));
 			break;
 		case TIME_CHANGED:
-			if (gModel.getGameMode() == 1)
-				timeDrawsLeftLa.setText(SimpleDateFormat.getTimeInstance().format(new Date(event.getNewValue())));
+			if (gModel.getGameMode() == 0)
+				timeDrawsLeftLa.setText(format.format(new Date(event.getNewValue())));
 			break;
 		case POINTS_CHANGED:
 			pointsLa.setText(Long.toString(event.getNewValue()));
