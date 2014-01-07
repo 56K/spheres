@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import Spheres.GameChangeEvent.EventType;
@@ -80,18 +81,24 @@ public class User implements Serializable {
 		 * Diese Methode überprüft ob das übergebene Ergebnis für die
 		 * persönliche Bestenliste reicht.
 		 */
-		if (count > timeHigh[timeHigh.length - 1])
+		if (count > timeHigh[timeHigh.length - 1]  || drawHigh.length<10)
 			return true;
 
 		return false;
 	}
 
 	public void writeTimeTopTen(int count) {
+		if(timeHigh.length<10)
+		{
+			timeHigh = Arrays.copyOf(timeHigh, timeHigh.length+1);
+		}
 		for (int i = 0; i < timeHigh.length; i++) {
 			if (count > timeHigh[i]) {
 				int h = timeHigh[i];
 				timeHigh[i] = count;
-				count = h;
+				if(i<timeHigh.length)
+					timeHigh[i+1] = h;
+				break;
 			}
 		}
 	}
@@ -101,18 +108,24 @@ public class User implements Serializable {
 		 * Diese Methode überprüft ob das übergebene Ergebnis für die
 		 * persönliche Bestenliste reicht.
 		 */
-		if (count > drawHigh[drawHigh.length - 1])
+		if (count > drawHigh[drawHigh.length - 1] || drawHigh.length<10)
 			return true;
 
 		return false;
 	}
 
 	public void writeDrawTopTen(int count) {
+		if(drawHigh.length<10)
+		{
+			drawHigh = Arrays.copyOf(drawHigh, drawHigh.length+1);
+		}
 		for (int i = 0; i < drawHigh.length; i++) {
 			if (count > drawHigh[i]) {
 				int h = drawHigh[i];
 				drawHigh[i] = count;
-				count = h;
+				if(i<drawHigh.length)
+					drawHigh[i+1] = h;
+				break;
 			}
 		}
 	}
@@ -257,8 +270,11 @@ public class User implements Serializable {
 	}
 	
 	protected void fireGameEvent(GameChangeEvent event) {
-		for (GameListener listener : listeners) {
-			listener.notify(event);
+		if(listeners!=null) {
+			for (GameListener listener : listeners) {
+				listener.notify(event);
+			}
+			
 		}
 	}
 	
