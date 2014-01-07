@@ -40,7 +40,6 @@ public class Animator extends Thread {
 			} catch (InterruptedException e) {
 				break;
 			}
-
 		}
 	}
 

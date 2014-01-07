@@ -40,7 +40,7 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 		// --------------------------------Action-Listerner_für_die_GameView
 		gView.addExitListener(new ExitListener());
 		gView.addShopListener(new ShopListener());
-		gView.addMenuListener(new MenuListener());
+		gView.addMenuListener(new MenuListener()); 
 		gModel.addGameListener(gView);
 
 		gView.addBronsonListener(new BronsonListener());
