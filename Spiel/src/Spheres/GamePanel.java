@@ -50,14 +50,6 @@ public class GamePanel extends JComponent {
 				g.drawLine((int)currentPoint.getX(), (int)currentPoint.getY(), getMousePosition().x, getMousePosition().y);
 			g2d.setStroke(stroke);
 		}
-		
-		if(gModel.hasFinished())
-		{
-			
-			g2d.setColor(Color.BLACK);
-			g2d.setFont(g2d.getFont().deriveFont(50f));
-			g2d.drawString("Ende", 100, 100);
-		}
 	}
 
 	public void setMousePath(Path2D mousePath) {

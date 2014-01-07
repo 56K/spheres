@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 
+import Spheres.GameChangeEvent.EventType;
+
 public class GameControl implements SlidingPanel.AnimtationListener,
 		GameListener {
 
@@ -42,6 +44,7 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 		gView.addShopListener(new ShopListener());
 		gView.addMenuListener(new MenuListener()); 
 		gModel.addGameListener(gView);
+		gModel.addGameListener(this);
 
 		gView.addBronsonListener(new BronsonListener());
 		gView.addSeagalListener(new SeagalListener());
@@ -372,8 +375,21 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 
 	@Override
 	public void notify(GameChangeEvent event) {
-		// if(event.getType()==EventType.GAME_OVER)
-		// TODO Highscore slide
+		 if(event.getType()==EventType.GAME_OVER)
+		 {
+			 if (gModel.getGameMode()==1)
+			 {
+				 if (gModel.getUser().checkDrawTopTen(gModel.getUser().getCurrentPoints()))
+				 	gModel.getUser().writeDrawTopTen(gModel.getUser().getCurrentPoints());
+			}
+			 else
+			 {
+				 if (gModel.getUser().checkTimeTopTen(gModel.getUser().getCurrentPoints()))
+				 	gModel.getUser().writeTimeTopTen(gModel.getUser().getCurrentPoints());
+			 }
+			 spheres.navigateTo(new Highscore(this.spheres, gModel.getUser()));
+			 
+		 }
 
 	}
 }

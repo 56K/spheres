@@ -271,4 +271,5 @@ public class User implements Serializable {
 	public void removeGameListener(GameListener listener) {
 		listeners.add(listener);
 	}	
+
 }
