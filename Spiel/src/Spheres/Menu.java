@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -17,7 +18,7 @@ import javax.swing.JSlider;
 public class Menu extends View {
 
 	// --------Variablendeklaration----------------------------
-	private JButton startB, userSetB, highB, shopB, settB, helpB;
+	private JButton startB, userSetB, highB, shopB, settB, helpB, continueB;
 	private JSlider slide;
 	private JLabel zeitLa, zugLa;
 	private JPanel center;
@@ -26,13 +27,17 @@ public class Menu extends View {
 
 	// ------ Konstruktor
 	public Menu(Spheres spheresArgs, User konUser) {
-		super(spheresArgs, konUser);
+		this(spheresArgs, konUser, null);
+	}
+	
+	public Menu(Spheres spheresArgs, User konUser, final JComponent backAddress) {
+		super(spheresArgs, konUser,backAddress);
 		this.spheres = super.getSpheres();
 		this.user = konUser;
 		super.setWhereAmI("Hauptmenü");
 		super.setBackBVisibility(false);
 		center = new JPanel();
-		center.setLayout(new GridLayout(8, 3, 2, 10));
+		center.setLayout(new GridLayout(0, 3, 2, 10));
 		super.add(center, BorderLayout.CENTER);
 
 		// ------------ centerPanel befüllen
@@ -63,9 +68,25 @@ public class Menu extends View {
 			}
 		});
 		center.add(new JLabel(" "));
-		// ------------------------------------------------------FREI
 		center.add(new JLabel(" "));
-		center.add(new JLabel(" "));
+		if(backAddress==null) {
+			// ------------------------------------------------------FREI
+			center.add(new JLabel(" "));
+		}
+		else {
+			continueB = new JButton("Weiterspielen");
+			continueB.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
+			continueB.setBorder(BorderFactory.createEtchedBorder(Color.LIGHT_GRAY,
+					Color.black));
+			center.add(continueB);
+			continueB.addActionListener(new ActionListener() {
+				// Annonyme Listenerklasse für den Loginbutton
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					spheres.navigateTo(backAddress);
+				}
+			});
+		}
 		center.add(new JLabel(" "));
 		// ------------------------------------------------------Highscore
 		center.add(new JLabel(" "));

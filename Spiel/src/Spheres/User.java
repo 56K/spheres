@@ -96,7 +96,7 @@ public class User implements Serializable {
 			if (count > timeHigh[i]) {
 				int h = timeHigh[i];
 				timeHigh[i] = count;
-				if(i<timeHigh.length)
+				if(i<timeHigh.length-1)
 					timeHigh[i+1] = h;
 				break;
 			}
@@ -123,7 +123,7 @@ public class User implements Serializable {
 			if (count > drawHigh[i]) {
 				int h = drawHigh[i];
 				drawHigh[i] = count;
-				if(i<drawHigh.length)
+				if(i<drawHigh.length-1)
 					drawHigh[i+1] = h;
 				break;
 			}

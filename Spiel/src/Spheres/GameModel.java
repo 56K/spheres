@@ -23,7 +23,7 @@ public class GameModel implements Serializable {
 		user = userArgs;
 		gameMode = modeArgs;
 		timeLeft = TimeUnit.SECONDS.toMillis(60);
-		drawsLeft = 2;
+		drawsLeft = 30;
 		balls = new Ball[6][6];
 		this.listeners = new ArrayList<>();
 	}
@@ -59,7 +59,7 @@ public class GameModel implements Serializable {
 	public void setTimeLeft(long time) {
 		timeLeft = time;
 		fireGameEvent(new GameChangeEvent(EventType.TIME_CHANGED, time));
-		if(time<=0)
+		if(time<=0 && getGameMode()==0)
 			fireGameEvent(new GameChangeEvent(EventType.GAME_OVER, 0));
 	}
 
@@ -74,7 +74,7 @@ public class GameModel implements Serializable {
 	public void setDrawsLeft(int draws) {
 		drawsLeft = draws;
 		fireGameEvent(new GameChangeEvent(EventType.DRAWS_CHANGED, draws));
-		if(draws<=0)
+		if(draws<=0  && getGameMode()==1)
 			fireGameEvent(new GameChangeEvent(EventType.GAME_OVER, 0));
 	}
 

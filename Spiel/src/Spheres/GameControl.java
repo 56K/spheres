@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 
 import Spheres.GameChangeEvent.EventType;
 
@@ -100,7 +101,8 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 	class MenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent menu) {
 			animator.pause(true);
-			spheres.navigateTo(new Menu(spheres, gModel.getUser()), SlidingPanel.Direction.RIGHT);
+			
+			spheres.navigateTo(new Menu(spheres, gModel.getUser(), gView), SlidingPanel.Direction.RIGHT);
 		}
 	}
 
