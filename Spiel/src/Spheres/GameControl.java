@@ -85,7 +85,6 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 		public void actionPerformed(ActionEvent exit) {
 			spheres.exit();
 		}
-
 	}
 
 	class ShopListener implements ActionListener {
@@ -97,7 +96,8 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 
 	class MenuListener implements ActionListener {
 		public void actionPerformed(ActionEvent menu) {
-
+			animator.pause(true);
+			spheres.navigateTo(new Menu(spheres, gModel.getUser()), SlidingPanel.Direction.RIGHT);
 		}
 	}
 

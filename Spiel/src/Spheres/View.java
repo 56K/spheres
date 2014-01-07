@@ -124,7 +124,7 @@ public abstract class View extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(backAddress!=null)
-					spheres.navigateTo(backAddress);
+					spheres.navigateTo(backAddress, SlidingPanel.Direction.RIGHT);
 				else
 					spheres.navigateTo(new Menu(spheres, user),
 							SlidingPanel.Direction.RIGHT);

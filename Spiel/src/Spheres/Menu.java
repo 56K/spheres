@@ -15,10 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 
 public class Menu extends View {
-	/**
-	 * 
-	 * 
-	 */
 
 	// --------Variablendeklaration----------------------------
 	private JButton startB, userSetB, highB, shopB, settB, helpB;

@@ -23,7 +23,7 @@ public class GameModel implements Serializable {
 		user = userArgs;
 		gameMode = modeArgs;
 		timeLeft = TimeUnit.SECONDS.toMillis(60);
-		drawsLeft = 30;
+		drawsLeft = 2;
 		balls = new Ball[6][6];
 		this.listeners = new ArrayList<>();
 	}
