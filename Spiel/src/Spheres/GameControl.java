@@ -64,6 +64,7 @@ public class GameControl implements SlidingPanel.AnimtationListener,
 		gView.setSSB();
 		gView.setUsername();
 		gView.setPoints("0");
+		gModel.resetCurrentPoints();
 	}
 
 	// ------ befüllt das Grid nach dem Spielstart mit Bällen ----

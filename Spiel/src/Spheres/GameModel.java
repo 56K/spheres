@@ -27,6 +27,10 @@ public class GameModel implements Serializable {
 		balls = new Ball[6][6];
 		this.listeners = new ArrayList<>();
 	}
+	
+	public void resetCurrentPoints() {
+		user.setCurrentPoints(0);
+	}
 
 	public String getUsername() {
 		return user.getName();
