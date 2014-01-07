@@ -80,7 +80,7 @@ public class Menu extends View {
 			// Annonyme Listenerklasse für den Loginbutton
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				spheres.navigateTo(new Highscore(spheres, user));
+				spheres.navigateTo(new GlobalHighscore(spheres, user, spheres.loadTimeHighscore(), spheres.loadDrawHighscore()));
 			}
 		});
 		center.add(new JLabel(" "));

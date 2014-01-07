@@ -230,7 +230,7 @@ public class Spheres extends WindowAdapter {
 		return builder.toString();
 	}
 
-	private SortedSet<HighscoreEntry> loadTimeHighscore() {
+	public SortedSet<HighscoreEntry> loadTimeHighscore() {
 		File file = new File("highscore.properties");
 		Properties properties = new Properties();
 		if (file.exists()) {
@@ -258,7 +258,7 @@ public class Spheres extends WindowAdapter {
 		return highscore;
 	}
 
-	private SortedSet<HighscoreEntry> loadDrawHighscore() {
+	public SortedSet<HighscoreEntry> loadDrawHighscore() {
 		File file = new File("highscore.properties");
 		Properties properties = new Properties();
 		if (file.exists()) {
